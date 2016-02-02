@@ -2,24 +2,22 @@
 
 namespace Savannah {
     public class Antilope : IAnimal {
-        public Antilope(int xAxis, int yAxis) {
-            HitPoints = 150;
-            MovementSpeed = 1;
-            PositionOnXAxis = xAxis;
-            PositionOnYAxis = yAxis;
-        }
-
         public Antilope() {
             HitPoints = 150;
+            Name = "Antilope";
         }
 
         public int HitPoints { get; set; }
         public int PositionOnXAxis { get; set; }
         public int PositionOnYAxis { get; set; }
-        public int MovementSpeed { get; set; }
+        public string Name { get; set; }
 
         public void Move() {
-            throw new NotImplementedException();
+            int x = Program.Random.Next(-1, 2);
+            int y = Program.Random.Next(-1, 2);
+            PositionOnXAxis += x;
+            PositionOnYAxis += y;
+            HitPoints -= 10;
         }
 
         public void Die() {

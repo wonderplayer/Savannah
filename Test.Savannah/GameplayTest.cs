@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Savannah;
 
@@ -15,18 +16,47 @@ namespace Test.Savannah {
         [Test]
         public void NewGame_CanCreateNewGame_Can() {
             gameplay.NewGame();
-            Assert.IsFalse(gameplay.Lions.Count == 0);
-            Assert.IsFalse(gameplay.Antilopes.Count == 0);
+            Assert.IsNotEmpty(gameplay.Animals);
         }
 
         [Test]
-        [Ignore("Doesn't work without debugging.")]
-        public void AddAntilope_AddTwoAntilopesToSamePosition_Cannot() {
-            var antilopes = new List<Antilope>();
-            gameplay.AddAntilope(antilopes);
-            gameplay.AddAntilope(antilopes);
-            Assert.AreNotEqual(antilopes[0].PositionOnXAxis, antilopes[1].PositionOnXAxis);
-            Assert.AreNotEqual(antilopes[0].PositionOnYAxis, antilopes[1].PositionOnYAxis);
+        public void AddAnimal_AddsAnimalToDifferentPosition_Can() {
+            gameplay.Animals = new List<IAnimal>();
+            var lion = new Lion {
+                HitPoints = 100,
+                Name = "Lion",
+                PositionOnXAxis = 2,
+                PositionOnYAxis = 2
+            };
+            var lion2 = new Lion {
+                HitPoints = 100,
+                Name = "Lion",
+                PositionOnXAxis = 3,
+                PositionOnYAxis = 3
+            };
+            gameplay.AddAnimal(lion);
+            gameplay.AddAnimal(lion2);
+            Assert.AreNotEqual(gameplay.Animals[0].PositionOnXAxis, gameplay.Animals[1].PositionOnXAxis);
+            Assert.AreNotEqual(gameplay.Animals[0].PositionOnYAxis, gameplay.Animals[1].PositionOnYAxis);
+        }
+
+        [Test]
+        public void AddAnima_AddsAnimalToSamePosition_ThrowsException() {
+            gameplay.Animals = new List<IAnimal>();
+            var lion = new Lion {
+                HitPoints = 100,
+                Name = "Lion",
+                PositionOnXAxis = 2,
+                PositionOnYAxis = 2
+            };
+            var lion2 = new Lion {
+                HitPoints = 100,
+                Name = "Lion",
+                PositionOnXAxis = 2,
+                PositionOnYAxis = 2
+            };
+            gameplay.AddAnimalToList(lion);
+            Assert.Throws<Exception>(() => gameplay.AddAnimalToList(lion2));
         }
     }
 }
