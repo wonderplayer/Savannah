@@ -15,11 +15,5 @@ namespace Test.Savannah {
         public void Antilope_CanCreateNewAntilope_Can() {
             Assert.AreEqual(150, antilope.HitPoints);
         }
-
-        [Test]
-        public void Die_SetAntilopeHPTo0_AntilopeDies() {
-            antilope.Die();
-            Assert.AreEqual(0, antilope.HitPoints);
-        }
     }
 }

@@ -10,20 +10,17 @@ namespace Savannah {
             Animals = new List<IAnimal>();
             AddAnimal(new Lion());
             AddAnimal(new Antilope());
-
             var board = new Board();
             board.CreateBoard();
-            board.FillBoardWithAnimals(Animals);
-            board.ShowBoard();
-            board.ClearBoard(Animals);
-            Move(Animals);
-            board.FillBoardWithAnimals(Animals);
-            board.ShowBoard();
+            while (Animals.Count > 0) {
+                Play(board);
+            }
         }
 
-        private void Move(List<IAnimal> animals) {
+        private void Move(List<IAnimal> animals, Board board) {
+            var animalFunc = new AnimalFunctionality();
             foreach (IAnimal animal in animals) {
-                animal.Move();
+                animalFunc.Move(board, animal, animals);
             }
         }
 
@@ -59,5 +56,17 @@ namespace Savannah {
                 where animal.PositionOnXAxis.Equals(x) && animal.PositionOnYAxis.Equals(y)
                 select animal;
         }
+
+        private void Play(Board board) {
+            board.FillBoardWithAnimals(Animals);
+            board.ShowBoard();
+            board.ClearBoard(Animals);
+            Console.ReadLine();
+            Console.Clear();
+            Move(Animals, board);
+            CheckForDeadAnimals();
+        }
+
+        private void CheckForDeadAnimals() {}
     }
 }
