@@ -5,22 +5,16 @@ using System.Linq;
 namespace Savannah {
     public class Gameplay {
         public List<IAnimal> Animals;
+        private AnimalActions animalActions = new AnimalActions();
 
         public void NewGame() {
             Animals = new List<IAnimal>();
             AddAnimal(new Lion());
             AddAnimal(new Antilope());
-            var board = new Board();
-            board.CreateBoard();
+            var boardManager = new BoardManager();
+            boardManager.CreateBoard();
             while (Animals.Count > 0) {
-                Play(board);
-            }
-        }
-
-        private void Move(List<IAnimal> animals, Board board) {
-            var animalFunc = new AnimalFunctionality();
-            foreach (IAnimal animal in animals) {
-                animalFunc.Move(board, animal, animals);
+                Play(boardManager);
             }
         }
 
@@ -57,16 +51,13 @@ namespace Savannah {
                 select animal;
         }
 
-        private void Play(Board board) {
+        private void Play(BoardManager board) {
             board.FillBoardWithAnimals(Animals);
             board.ShowBoard();
             board.ClearBoard(Animals);
             Console.ReadLine();
             Console.Clear();
-            Move(Animals, board);
-            CheckForDeadAnimals();
+            animalActions.Move(board, Animals);
         }
-
-        private void CheckForDeadAnimals() {}
     }
 }

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 
 namespace Savannah {
-    public class Board {
-        public char[,] Field;
+    public class BoardManager {
+        public char[,] Board;
 
         public void CreateBoard() {
-            Field = new char[5, 5];
-            for (var y = 0; y < Field.GetLength(0); y++) {
-                for (var x = 0; x < Field.GetLength(1); x++) {
-                    Field[y, x] = ' ';
+            Board = new char[5, 5];
+            for (var y = 0; y < Board.GetLength(0); y++) {
+                for (var x = 0; x < Board.GetLength(1); x++) {
+                    Board[y, x] = ' ';
                 }
             }
         }
@@ -21,9 +21,9 @@ namespace Savannah {
         }
 
         public void ShowBoard() {
-            for (var y = 0; y < Field.GetLength(0); y++) {
-                for (var x = 0; x < Field.GetLength(1); x++) {
-                    Console.Write(Field[y, x]);
+            for (var y = 0; y < Board.GetLength(0); y++) {
+                for (var x = 0; x < Board.GetLength(1); x++) {
+                    Console.Write(Board[y, x]);
                 }
                 Console.WriteLine();
             }
@@ -31,12 +31,12 @@ namespace Savannah {
 
         public void ClearBoard(List<IAnimal> animals) {
             foreach (IAnimal animal in animals) {
-                Field[animal.PositionOnYAxis, animal.PositionOnXAxis] = ' ';
+                Board[animal.PositionOnYAxis, animal.PositionOnXAxis] = ' ';
             }
         }
 
         private void InsertAnimalToArray(IAnimal animal, char animalSignature) {
-            Field[animal.PositionOnYAxis, animal.PositionOnXAxis] = animalSignature;
+            Board[animal.PositionOnYAxis, animal.PositionOnXAxis] = animalSignature;
         }
 
         private static bool IsLion(IAnimal animal) {

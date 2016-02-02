@@ -4,20 +4,20 @@ using Savannah;
 
 namespace Test.Savannah {
     [TestFixture]
-    public class AnimalFunctionalityTest {
-        private AnimalFunctionality animalFunc;
+    public class AnimalActionsTest {
+        private AnimalActions animalFunc;
         private Gameplay gp;
-        private Board board;
+        private BoardManager boardManager;
 
         [SetUp]
         public void SetUp() {
-            animalFunc = new AnimalFunctionality();
+            animalFunc = new AnimalActions();
         }
 
         [Test]
         public void Move_MovesToCorrectPlace_Correct() {
             CreateGame();
-            animalFunc.Move(board, gp.Animals[0], gp.Animals);
+            animalFunc.Move(boardManager,gp.Animals);
             Assert.AreNotEqual(gp.Animals[0].PositionOnXAxis, gp.Animals[1].PositionOnXAxis);
         }
 
@@ -25,7 +25,7 @@ namespace Test.Savannah {
         public void Move_CanMove_Can() {
             CreateGame();
             int previousX = gp.Animals[0].PositionOnXAxis;
-            animalFunc.Move(board, gp.Animals[0], gp.Animals);
+            animalFunc.Move(boardManager,gp.Animals);
             Assert.AreNotEqual(previousX, gp.Animals[0].PositionOnXAxis);
         }
 
@@ -42,8 +42,8 @@ namespace Test.Savannah {
         }
 
         private void CreateGame() {
-            board = new Board();
-            board.CreateBoard();
+            boardManager = new BoardManager();
+            boardManager.CreateBoard();
             gp = new Gameplay {
                 Animals = new List<IAnimal>()
             };
