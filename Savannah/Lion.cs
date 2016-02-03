@@ -12,7 +12,7 @@ namespace Savannah {
         public int PositionOnXAxis { get; set; }
         public int PositionOnYAxis { get; set; }
         public string Name { get; set; }
-        readonly AnimalActions animalAction = new AnimalActions();
+        readonly Gameplay gameplay = new Gameplay();
 
         public bool TryToEat(List<IAnimal> animals) {
             IAnimal antilopeInRange = SearchForAntilope(animals);
@@ -31,7 +31,7 @@ namespace Savannah {
         }
 
         private IAnimal SearchForAntilope(List<IAnimal> animals) {
-            IEnumerable<IAnimal> animalsAround = animalAction.LookAround(animals, this);
+            IEnumerable<IAnimal> animalsAround = gameplay.LookAround(animals, this);
             return animalsAround.FirstOrDefault(a => a.Name == "Antilope");
         }
     }

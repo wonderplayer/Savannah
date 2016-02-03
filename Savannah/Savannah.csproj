@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimalActions.cs" />
     <Compile Include="Antilope.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Gameplay.cs" />

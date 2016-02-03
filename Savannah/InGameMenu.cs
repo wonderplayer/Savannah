@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Savannah {
     public class InGameMenu {
@@ -20,6 +19,6 @@ namespace Savannah {
                     gameplay.AddAnimal(new Antilope());
                     break;
             }
-        } 
+        }
     }
 }

@@ -13,10 +13,10 @@ namespace Savannah {
         public int PositionOnXAxis { get; set; }
         public int PositionOnYAxis { get; set; }
         public string Name { get; set; }
-        private readonly AnimalActions animalAction = new AnimalActions();
+        private readonly Gameplay gameplay = new Gameplay();
 
         public bool TryToRunAway(List<IAnimal> animals, Board board) {
-            IEnumerable<IAnimal> lionsAround = SearchForLions(animals);
+            var lionsAround = (List<IAnimal>) SearchForLions(animals);
             if (!lionsAround.Any()) {
                 return false;
             }
@@ -24,10 +24,10 @@ namespace Savannah {
             return true;
         }
 
-        private void RunAway(List<IAnimal> animals, IEnumerable<IAnimal> lionsAround, Board board) {
+        private void RunAway(List<IAnimal> animals, List<IAnimal> lionsAround, Board board) {
             for (int y = -1; y <= 1; y++) {
                 for (int x = -1; x <= 1; x++) {
-                    if (!animalAction.OutOfBounds(x, y, board, this) && SpaceIsFree(animals, x, y) &&
+                    if (!gameplay.OutOfBounds(x, y, board, this) && SpaceIsFree(animals, x, y) &&
                         IsSafePlaceToGo(lionsAround, x, y)) {
                         MoveTo(x, y);
                         return;
@@ -56,7 +56,7 @@ namespace Savannah {
         }
 
         private IEnumerable<IAnimal> SearchForLions(List<IAnimal> animals) {
-            IEnumerable<IAnimal> lionsAround = animalAction.LookAround(animals, this);
+            IEnumerable<IAnimal> lionsAround = gameplay.LookAround(animals, this);
             return lionsAround.Where(l => l.Name == "Lion");
         }
 
