@@ -1,41 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Savannah {
     public class Gameplay {
         public List<IAnimal> Animals;
-        private AnimalActions animalActions = new AnimalActions();
+        private readonly AnimalActions animalActions = new AnimalActions();
+        private readonly InGameMenu inGameMenu = new InGameMenu();
 
         public void NewGame() {
             Animals = new List<IAnimal>();
-            AddAnimal(new Lion());
-            AddAnimal(new Antilope());
             var boardManager = new BoardManager();
             boardManager.CreateBoard();
-            while (Animals.Count > 0) {
+            do {
                 Play(boardManager);
-            }
+            } while (Animals.Count > 0);
         }
 
         public void AddAnimal(IAnimal newAnimal) {
-            int x = Program.Random.Next(1, 5);
-            int y = Program.Random.Next(1, 5);
-            if (PositionIsNotFree(x, y).Any()) {
-                throw new Exception(
-                    "Sorry, but something went wrong and animal on this position already exists. PLease try again.");
-            }
-            AddAnimalToList(newAnimal, x, y);
-        }
+            int x;
+            int y;
+            do {
+                x = Program.Random.Next(1, 10);
+                y = Program.Random.Next(1, 10);
+                if (!PositionIsNotFree(x, y).Any()) {
+                    AddAnimalToList(newAnimal, x, y);
+                }
+            } while (!PositionIsNotFree(x, y).Any());
 
-        public void AddAnimalToList(IAnimal newAnimal) {
-            int x = newAnimal.PositionOnXAxis;
-            int y = newAnimal.PositionOnYAxis;
-            if (PositionIsNotFree(x, y).Any()) {
-                throw new Exception(
-                    "Sorry, but something went wrong and animal on this position already exists. PLease try again.");
-            }
-            Animals.Add(newAnimal);
         }
 
 
@@ -55,9 +46,9 @@ namespace Savannah {
             board.FillBoardWithAnimals(Animals);
             board.ShowBoard();
             board.ClearBoard(Animals);
-            Console.ReadLine();
-            Console.Clear();
+            inGameMenu.Show(this);
             animalActions.Move(board, Animals);
+            animalActions.Die(Animals);
         }
     }
 }

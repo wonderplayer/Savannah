@@ -6,7 +6,7 @@ namespace Savannah {
         public char[,] Board;
 
         public void CreateBoard() {
-            Board = new char[5, 5];
+            Board = new char[10, 10];
             for (var y = 0; y < Board.GetLength(0); y++) {
                 for (var x = 0; x < Board.GetLength(1); x++) {
                     Board[y, x] = ' ';
@@ -36,6 +36,7 @@ namespace Savannah {
         }
 
         private void InsertAnimalToArray(IAnimal animal, char animalSignature) {
+
             Board[animal.PositionOnYAxis, animal.PositionOnXAxis] = animalSignature;
         }
 

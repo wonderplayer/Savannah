@@ -5,19 +5,23 @@ using Savannah;
 namespace Test.Savannah {
     [TestFixture]
     public class AnimalActionsTest {
-        private AnimalActions animalFunc;
+        private AnimalActions animalAction;
         private Gameplay gp;
         private BoardManager boardManager;
 
         [SetUp]
         public void SetUp() {
-            animalFunc = new AnimalActions();
+            animalAction = new AnimalActions();
+            gp = new Gameplay
+            {
+                Animals = new List<IAnimal>()
+            };
         }
 
         [Test]
         public void Move_MovesToCorrectPlace_Correct() {
             CreateGame();
-            animalFunc.Move(boardManager,gp.Animals);
+            animalAction.Move(boardManager,gp.Animals);
             Assert.AreNotEqual(gp.Animals[0].PositionOnXAxis, gp.Animals[1].PositionOnXAxis);
         }
 
@@ -25,30 +29,38 @@ namespace Test.Savannah {
         public void Move_CanMove_Can() {
             CreateGame();
             int previousX = gp.Animals[0].PositionOnXAxis;
-            animalFunc.Move(boardManager,gp.Animals);
+            animalAction.Move(boardManager,gp.Animals);
             Assert.AreNotEqual(previousX, gp.Animals[0].PositionOnXAxis);
         }
 
         [Test]
-        [Ignore("Method is not complete")]
         public void Die_IsAnimalRemovedFromList_Yes() {
-            gp = new Gameplay {
-                Animals = new List<IAnimal>()
+            var deadLion = new Lion() {
+                HitPoints = 0
             };
-            var lionToRemove = new Lion();
+            gp.AddAnimal(deadLion);
+            gp.AddAnimal(new Lion());
+            animalAction.Die(gp.Animals);
+            Assert.IsFalse(gp.Animals.Contains(deadLion));
+        }
+
+        [Test]
+        public void Die_TryToRemoveAliveAnimals_CannotRemove() {  
+            var lionToRemove = new Lion()
+            {
+                HitPoints = 10
+            };
             gp.AddAnimal(lionToRemove);
-            gp.AddAnimal(new Antilope());
-            Assert.IsFalse(gp.Animals.Contains(lionToRemove));
+            gp.AddAnimal(new Lion());
+            animalAction.Die(gp.Animals);
+            Assert.IsTrue(gp.Animals.Contains(lionToRemove));
         }
 
         private void CreateGame() {
             boardManager = new BoardManager();
             boardManager.CreateBoard();
-            gp = new Gameplay {
-                Animals = new List<IAnimal>()
-            };
-            gp.Animals.Add(new Lion());
-            gp.Animals.Add(new Antilope());
+            gp.AddAnimal(new Lion());
+            gp.AddAnimal(new Antilope());
         }
     }
 }
