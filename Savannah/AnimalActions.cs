@@ -8,7 +8,7 @@ namespace Savannah {
             animals.RemoveAll(animal => deadAnimals.Contains(animal));
         }
 
-        public void Move(BoardManager boardManager, List<IAnimal> animals) {
+        public void Move(Board boardManager, List<IAnimal> animals) {
             foreach (IAnimal animal in animals) {
                 if (IsLion(animal)) {
                     var lion = (Lion) animal;
@@ -57,7 +57,7 @@ namespace Savannah {
             return deadAnimals;
         }
 
-        private void MoveAnimal(BoardManager board, List<IAnimal> animals, IAnimal animal) {
+        private void MoveAnimal(Board board, List<IAnimal> animals, IAnimal animal) {
             int x = Program.Random.Next(-1, 2);
             int y = Program.Random.Next(-1, 2);
             while (OutOfBounds(x, y, board, animal) || PlaceIsNotFree(x, y, animal, animals) || DidntMove(x, y)) {
@@ -79,9 +79,9 @@ namespace Savannah {
             return animalInWantedPlace.Any();
         }
 
-        public bool OutOfBounds(int x, int y, BoardManager board, IAnimal animal) {
-            return (animal.PositionOnXAxis + x >= board.Board.GetLength(0)) ||
-                   (animal.PositionOnXAxis + x < 0) || (animal.PositionOnYAxis + y >= board.Board.GetLength(0)) ||
+        public bool OutOfBounds(int x, int y, Board board, IAnimal animal) {
+            return (animal.PositionOnXAxis + x >= board.BoardLayout.GetLength(0)) ||
+                   (animal.PositionOnXAxis + x < 0) || (animal.PositionOnYAxis + y >= board.BoardLayout.GetLength(0)) ||
                    (animal.PositionOnYAxis + y < 0);
         }
 

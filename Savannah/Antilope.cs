@@ -15,7 +15,7 @@ namespace Savannah {
         public string Name { get; set; }
         private readonly AnimalActions animalAction = new AnimalActions();
 
-        public bool TryToRunAway(List<IAnimal> animals, BoardManager board) {
+        public bool TryToRunAway(List<IAnimal> animals, Board board) {
             IEnumerable<IAnimal> lionsAround = SearchForLions(animals);
             if (!lionsAround.Any()) {
                 return false;
@@ -24,7 +24,7 @@ namespace Savannah {
             return true;
         }
 
-        private void RunAway(List<IAnimal> animals, IEnumerable<IAnimal> lionsAround, BoardManager board) {
+        private void RunAway(List<IAnimal> animals, IEnumerable<IAnimal> lionsAround, Board board) {
             for (int y = -1; y <= 1; y++) {
                 for (int x = -1; x <= 1; x++) {
                     if (!animalAction.OutOfBounds(x, y, board, this) && SpaceIsFree(animals, x, y) &&

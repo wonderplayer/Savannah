@@ -7,7 +7,7 @@ namespace Test.Savannah {
     public class AnimalActionsTest {
         private AnimalActions animalAction;
         private Gameplay gp;
-        private BoardManager boardManager;
+        private Board boardManager;
 
         [SetUp]
         public void SetUp() {
@@ -57,8 +57,8 @@ namespace Test.Savannah {
         }
 
         private void CreateGame() {
-            boardManager = new BoardManager();
-            boardManager.CreateBoard();
+            boardManager = new Board();
+            boardManager.Create();
             gp.AddAnimal(new Lion());
             gp.AddAnimal(new Antilope());
         }

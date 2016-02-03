@@ -9,10 +9,10 @@ namespace Savannah {
 
         public void NewGame() {
             Animals = new List<IAnimal>();
-            var boardManager = new BoardManager();
-            boardManager.CreateBoard();
+            var board = new Board();
+            board.Create();
             do {
-                Play(boardManager);
+                Play(board);
             } while (Animals.Count > 0);
         }
 
@@ -26,7 +26,6 @@ namespace Savannah {
                     AddAnimalToList(newAnimal, x, y);
                 }
             } while (!PositionIsNotFree(x, y).Any());
-
         }
 
 
@@ -42,10 +41,10 @@ namespace Savannah {
                 select animal;
         }
 
-        private void Play(BoardManager board) {
-            board.FillBoardWithAnimals(Animals);
-            board.ShowBoard();
-            board.ClearBoard(Animals);
+        private void Play(Board board) {
+            board.FillWithAnimals(Animals);
+            board.Show();
+            board.Clear(Animals);
             inGameMenu.Show(this);
             animalActions.Move(board, Animals);
             animalActions.Die(Animals);

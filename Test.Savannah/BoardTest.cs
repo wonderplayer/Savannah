@@ -6,28 +6,28 @@ using Savannah;
 namespace Test.Savannah {
     [TestFixture]
     public class BoardTest {
-        private BoardManager boardManager;
+        private Board boardManager;
 
         [SetUp]
         public void SetUp() {
-            boardManager = new BoardManager();
+            boardManager = new Board();
         }
 
         [Test]
         public void CreateBoard_CanCreateEmptyBoard_Can() {
-            boardManager.CreateBoard();
-            Assert.IsNotEmpty(boardManager.Board);
+            boardManager.Create();
+            Assert.IsNotEmpty(boardManager.BoardLayout);
         }
 
         [Test]
         public void ShowBoard_CanShowNotEmptyBoard_Can() {
-            boardManager.CreateBoard();
-            boardManager.ShowBoard();
+            boardManager.Create();
+            boardManager.Show();
         }
 
         [Test]
         public void ShowBoard_CanShowEmptyBoard_Exception() {
-            Assert.Throws<NullReferenceException>(() => boardManager.ShowBoard());
+            Assert.Throws<NullReferenceException>(() => boardManager.Show());
         }
 
         [Test]
@@ -36,17 +36,17 @@ namespace Test.Savannah {
                 Animals = new List<IAnimal>()
             };
             AddAnimals(gameplay);
-            boardManager.Board = new char[5, 5];
-            var emptyField = new char[5, 5];
-            boardManager.FillBoardWithAnimals(gameplay.Animals);
-            Assert.AreNotEqual(emptyField, boardManager.Board);
+            boardManager.BoardLayout = new char[10, 10];
+            var emptyField = new char[10, 10];
+            boardManager.FillWithAnimals(gameplay.Animals);
+            Assert.AreNotEqual(emptyField, boardManager.BoardLayout);
         }
 
         [Test]
         public void FillBoardWithAnimals_CannotFillBoardWithNoAnimals_Exception() {
             var gameplay = new Gameplay();
-            boardManager.Board = new char[5, 5];
-            Assert.Throws<NullReferenceException>(() => boardManager.FillBoardWithAnimals(gameplay.Animals));
+            boardManager.BoardLayout = new char[5, 5];
+            Assert.Throws<NullReferenceException>(() => boardManager.FillWithAnimals(gameplay.Animals));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Test.Savannah {
                 Animals = new List<IAnimal>()
             };
             AddAnimals(gameplay);
-            Assert.Throws<NullReferenceException>(() => boardManager.FillBoardWithAnimals(gameplay.Animals));
+            Assert.Throws<NullReferenceException>(() => boardManager.FillWithAnimals(gameplay.Animals));
         }
 
 
