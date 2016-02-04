@@ -35,6 +35,13 @@ namespace Savannah {
             }
         }
 
+        public bool OutOfBounds(int x, int y, char[,] boardLayout, IAnimal animal)
+        {
+            return (animal.PositionOnXAxis + x >= boardLayout.GetLength(0)) ||
+                   (animal.PositionOnXAxis + x < 0) || (animal.PositionOnYAxis + y >= boardLayout.GetLength(1)) ||
+                   (animal.PositionOnYAxis + y < 0);
+        }
+
         private void PlaceAnimalOnBoard(IAnimal animal, char animalSignature) {
             BoardLayout[animal.PositionOnYAxis, animal.PositionOnXAxis] = animalSignature;
         }

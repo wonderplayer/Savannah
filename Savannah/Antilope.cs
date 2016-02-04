@@ -27,7 +27,7 @@ namespace Savannah {
         private void RunAway(List<IAnimal> animals, IEnumerable<IAnimal> lionsAround, Board board) {
             for (int y = -1; y <= 1; y++) {
                 for (int x = -1; x <= 1; x++) {
-                    if (!gameplay.OutOfBounds(x, y, board, this) && SpaceIsFree(animals, x, y) &&
+                    if (!board.OutOfBounds(x, y, board.BoardLayout, this) && SpaceIsFree(animals, x, y) &&
                         IsSafePlaceToGo(lionsAround, x, y)) {
                         MoveTo(x, y);
                         return;

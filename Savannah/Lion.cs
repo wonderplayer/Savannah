@@ -26,13 +26,13 @@ namespace Savannah {
         private void Eat(IAnimal antilopeInRange) {
             PositionOnXAxis = antilopeInRange.PositionOnXAxis;
             PositionOnYAxis = antilopeInRange.PositionOnYAxis;
-            HitPoints += antilopeInRange.HitPoints;
+            HitPoints = 100;
             antilopeInRange.HitPoints = 0;
         }
 
         private IAnimal SearchForAntilope(List<IAnimal> animals) {
             IEnumerable<IAnimal> animalsAround = gameplay.LookAround(animals, this);
-            return animalsAround.FirstOrDefault(a => a.Name == "Antilope");
+            return animalsAround.Where(a => a.HitPoints > 0).FirstOrDefault(a => a.Name == "Antilope");
         }
     }
 }
