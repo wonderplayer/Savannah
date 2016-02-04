@@ -2,6 +2,7 @@
 
 namespace Savannah {
     public class InGameMenu {
+        private AnimalActions animalActions = new AnimalActions();
         public void Show(Gameplay gameplay) {
             Console.Write("L - add lion  ");
             Console.WriteLine("A - add antilope");
@@ -13,10 +14,10 @@ namespace Savannah {
         private void SelectAction(ConsoleKey key, Gameplay gameplay) {
             switch (key) {
                 case ConsoleKey.L:
-                    gameplay.AddAnimal(new Lion());
+                    animalActions.AddAnimal(new Lion(), gameplay.Animals);
                     break;
                 case ConsoleKey.A:
-                    gameplay.AddAnimal(new Antilope());
+                    animalActions.AddAnimal(new Antilope(), gameplay.Animals);
                     break;
             }
         }

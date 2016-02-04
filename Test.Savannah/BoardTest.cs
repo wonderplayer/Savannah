@@ -92,9 +92,10 @@ namespace Test.Savannah {
             return gameplay;
         }
 
-        private static void AddAnimals(Gameplay gameplay) {
-            gameplay.AddAnimal(new Antilope());
-            gameplay.AddAnimal(new Antilope());
+        private void AddAnimals(Gameplay gameplay) {
+            AnimalActions animalActions = new AnimalActions();
+            animalActions.AddAnimal(new Antilope(), gameplay.Animals);
+            animalActions.AddAnimal(new Antilope(), gameplay.Animals);
         }
     }
 }

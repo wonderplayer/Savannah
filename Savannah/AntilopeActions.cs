@@ -6,6 +6,7 @@ namespace Savannah {
     public class AntilopeActions {
 
         private readonly Gameplay gameplay = new Gameplay();
+        private AnimalActions animalActions = new AnimalActions();
 
         public bool TryToRunAway(List<IAnimal> animals, Board board, Antilope antilope)
         {
@@ -63,7 +64,7 @@ namespace Savannah {
 
         private IEnumerable<IAnimal> SearchForLions(List<IAnimal> animals, Antilope antilope)
         {
-            IEnumerable<IAnimal> lionsAround = gameplay.LookAround(animals, antilope);
+            IEnumerable<IAnimal> lionsAround = animalActions.LookAround(animals, antilope);
             return lionsAround.Where(l => l.Name == "Lion");
         }
 

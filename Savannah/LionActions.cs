@@ -3,7 +3,9 @@ using System.Linq;
 
 namespace Savannah {
     public class LionActions {
-        readonly Gameplay gameplay = new Gameplay();
+        private readonly Gameplay gameplay = new Gameplay();
+        private AnimalActions animalActions = new AnimalActions();
+
         public bool TryToEat(List<IAnimal> animals, Lion lion)
         {
             IAnimal antilopeToEat = SearchForAntilope(animals, lion);
@@ -30,7 +32,7 @@ namespace Savannah {
 
         private IAnimal SearchForAntilope(List<IAnimal> animals, Lion lion)
         {
-            IEnumerable<IAnimal> animalsAround = gameplay.LookAround(animals, lion);
+            IEnumerable<IAnimal> animalsAround = animalActions.LookAround(animals, lion);
             return animalsAround.Where(a => a.HitPoints > 0).FirstOrDefault(a => a.Name == "Antilope");
         }
     }

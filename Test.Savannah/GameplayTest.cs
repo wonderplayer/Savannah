@@ -22,13 +22,6 @@ namespace Test.Savannah {
             Assert.AreNotEqual(gameplay.Animals[0].PositionOnYAxis, gameplay.Animals[1].PositionOnYAxis);
         }
 
-        [Test]
-        public void LookAround_FindsAllAnimalsAround_FindsOne() {
-            AddLionsOnDifferentLocations(gameplay.Animals);
-            IEnumerable<IAnimal> foundAnimals = gameplay.LookAround(gameplay.Animals, gameplay.Animals[0]);
-            Assert.AreEqual(1, foundAnimals.Count());
-        }
-
         private void AddLionsOnDifferentLocations(List<IAnimal> animals) {
             var lion = new Lion {
                 HitPoints = 100,
