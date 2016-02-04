@@ -4,24 +4,21 @@ using Savannah;
 
 namespace Test.Savannah {
     [TestFixture]
-    public class AntilopeTest {
+    public class AntilopeActionsTest {
         private Antilope antilope;
         private Board board;
         private Gameplay gameplay;
+        private AntilopeActions antilopeActions;
 
         [SetUp]
         public void SetUp() {
             antilope = new Antilope();
+            antilopeActions = new AntilopeActions();
             gameplay = new Gameplay {
                 Animals = new List<IAnimal>()
             };
             board = new Board();
             board.Create();
-        }
-
-        [Test]
-        public void Antilope_CanCreateNewAntilope_Can() {
-            Assert.AreEqual(150, antilope.HitPoints);
         }
 
         [Test]
@@ -40,12 +37,12 @@ namespace Test.Savannah {
             };
             gameplay.Animals.Add(newAntilope);
             gameplay.Animals.Add(newLion);
-            Assert.IsTrue(newAntilope.TryToRunAway(gameplay.Animals, board));
+            Assert.IsTrue(antilopeActions.TryToRunAway(gameplay.Animals, board, newAntilope));
         }
 
         [Test]
         public void TryToRunAway_DoesNotRunAway_ReturnsFalse() {
-            Assert.IsFalse(antilope.TryToRunAway(gameplay.Animals, board));
+            Assert.IsFalse(antilopeActions.TryToRunAway(gameplay.Animals, board, antilope));
         }
     }
 }

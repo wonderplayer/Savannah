@@ -20,7 +20,8 @@ namespace Savannah {
                 }
                 if (IsAntilope(animal)) {
                     var antilope = (Antilope) animal;
-                    bool ranAway = antilope.TryToRunAway(animals, boardManager);
+                    var antilopeActions = new AntilopeActions();
+                    bool ranAway = antilopeActions.TryToRunAway(animals, boardManager, antilope);
                     if (ranAway) {
                         continue;
                     }

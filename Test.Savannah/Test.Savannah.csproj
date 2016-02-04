@@ -62,7 +62,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AntilopeTest.cs" />
+    <Compile Include="AntilopeActionsTest.cs" />
     <Compile Include="BoardTest.cs" />
     <Compile Include="GameplayTest.cs" />
     <Compile Include="LionActionsTest.cs" />
