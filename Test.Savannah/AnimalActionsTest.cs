@@ -17,6 +17,8 @@ namespace Test.Savannah {
                 Animals = new List<IAnimal>()
             };
             animalActions= new AnimalActions();
+            board = new Board();
+            board.Create();
         }
 
         [Test]
@@ -30,19 +32,53 @@ namespace Test.Savannah {
         [Test]
         public void Move_MovesToFreePlace_Correct()
         {
-            CreateGame();
+            CreateLionsAroundAntilope();
             animalActions.Move(board, gameplay.Animals);
             Assert.IsTrue(MovedToFreeSpace());
         }
 
         [Test]
-        public void Move_CanMove_Can()
-        {
-            CreateGame();
+        public void Move_MovesLionToFreeSpace() {
+            CreateTwoLions();
             int previousX = gameplay.Animals[0].PositionOnXAxis;
             int previousY = gameplay.Animals[0].PositionOnYAxis;
             animalActions.Move(board, gameplay.Animals);
             Assert.IsFalse(DidNotMove(previousX, previousY));
+        }
+
+        [Test]
+        public void Moves_AntilopeToFreeSpace() {
+            CreateTwoAntilopes();
+            int previousX = gameplay.Animals[0].PositionOnXAxis;
+            int previousY = gameplay.Animals[0].PositionOnYAxis;
+            animalActions.Move(board, gameplay.Animals);
+            Assert.IsFalse(DidNotMove(previousX, previousY));
+        }
+
+        [Test]
+        public void Move_AntilopeRunsAwayFromLion_RunsAway() {
+            CreateAntilopeAndLionToRunAway();
+            int previousX = gameplay.Animals[0].PositionOnXAxis;
+            int previousY = gameplay.Animals[0].PositionOnYAxis;
+            animalActions.Move(board, gameplay.Animals);
+            Assert.IsFalse(DidNotMove(previousX, previousY));
+        }
+
+        [Test]
+        public void Move_LionEatsAntilope_Eats() {
+            CreateAntilopeAndLionToEat();
+            int previousX = gameplay.Animals[0].PositionOnXAxis;
+            int previousY = gameplay.Animals[0].PositionOnYAxis;
+            animalActions.Move(board, gameplay.Animals);
+            Assert.IsFalse(DidNotMove(previousX, previousY));
+        }
+
+        [Test]
+        public void Die_RemoveDeadAnimalFromList_Removed() {
+            CreateTwoAntilopes();
+            gameplay.Animals[0].HitPoints = 0;
+            animalActions.Die(gameplay.Animals);
+            Assert.AreEqual(1, gameplay.Animals.Count);
         }
 
         private bool DidNotMove(int previousX, int previousY)
@@ -59,10 +95,7 @@ namespace Test.Savannah {
             return firstAnimalX != secondAnimalX && firstAnimalY != secondAnimalY;
         }
 
-        private void CreateGame()
-        {
-            board = new Board();
-            board.Create();
+        private void CreateTwoAntilopes() {
             var newAntilope = new Antilope
             {
                 HitPoints = 150,
@@ -74,11 +107,104 @@ namespace Test.Savannah {
             {
                 HitPoints = 150,
                 Name = "Antilope",
+                PositionOnXAxis = 5,
+                PositionOnYAxis = 5
+            };
+            gameplay.Animals.Add(newAntilope);
+            gameplay.Animals.Add(newAntilope2);
+        }
+
+        private void CreateAntilopeAndLionToRunAway() {
+            var newAntilope = new Antilope
+            {
+                HitPoints = 150,
+                Name = "Antilope",
+                PositionOnXAxis = 5,
+                PositionOnYAxis = 5
+            };
+            var newLion = new Lion
+            {
+                HitPoints = 100,
+                Name = "Lion",
                 PositionOnXAxis = 4,
                 PositionOnYAxis = 4
             };
             gameplay.Animals.Add(newAntilope);
-            gameplay.Animals.Add(newAntilope2);
+            gameplay.Animals.Add(newLion);
+        }
+
+        private void CreateTwoLions() {
+            var newLion = new Lion
+            {
+                HitPoints = 100,
+                Name = "Lion",
+                PositionOnXAxis = 4,
+                PositionOnYAxis = 4
+            };
+            var newLion2 = new Lion
+            {
+                HitPoints = 100,
+                Name = "Lion",
+                PositionOnXAxis = 5,
+                PositionOnYAxis = 5
+            };
+            gameplay.Animals.Add(newLion);
+            gameplay.Animals.Add(newLion2);
+        }
+
+        private void CreateAntilopeAndLionToEat()
+        {
+            var newLion = new Lion
+            {
+                HitPoints = 100,
+                Name = "Lion",
+                PositionOnXAxis = 4,
+                PositionOnYAxis = 4
+            };
+            var newAntilope = new Antilope
+            {
+                HitPoints = 150,
+                Name = "Antilope",
+                PositionOnXAxis = 5,
+                PositionOnYAxis = 5
+            };
+            gameplay.Animals.Add(newLion);
+            gameplay.Animals.Add(newAntilope);
+        }
+
+        private void CreateLionsAroundAntilope() {
+            var mainAntilope = new Antilope
+            {
+                HitPoints = 150,
+                Name = "Antilope",
+                PositionOnXAxis = 5,
+                PositionOnYAxis = 5
+            };
+            var newLion = new Lion
+            {
+                HitPoints = 100,
+                Name = "Lion",
+                PositionOnXAxis = 4,
+                PositionOnYAxis = 4
+            };
+            var newLion2 = new Lion
+            {
+                HitPoints = 100,
+                Name = "Lion",
+                PositionOnXAxis = 6,
+                PositionOnYAxis = 4
+            };
+            var newLion3 = new Lion
+            {
+                HitPoints = 100,
+                Name = "Lion",
+                PositionOnXAxis = 6,
+                PositionOnYAxis = 5
+            };
+            gameplay.Animals.Add(mainAntilope);
+            gameplay.Animals.Add(newLion);
+            gameplay.Animals.Add(newLion2);
+            gameplay.Animals.Add(newLion3);
         }
 
         private void AddLionsOnDifferentLocations(List<IAnimal> animals)

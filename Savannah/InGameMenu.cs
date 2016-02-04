@@ -2,7 +2,7 @@
 
 namespace Savannah {
     public class InGameMenu {
-        private AnimalActions animalActions = new AnimalActions();
+        private readonly AnimalActions animalActions = new AnimalActions();
         public void Show(Gameplay gameplay) {
             Console.Write("L - add lion  ");
             Console.WriteLine("A - add antilope");

@@ -5,8 +5,7 @@ using System.Linq;
 namespace Savannah {
     public class AntilopeActions {
 
-        private readonly Gameplay gameplay = new Gameplay();
-        private AnimalActions animalActions = new AnimalActions();
+        private readonly AnimalActions animalActions = new AnimalActions();
 
         public bool TryToRunAway(List<IAnimal> animals, Board board, Antilope antilope)
         {
