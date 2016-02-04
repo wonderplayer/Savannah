@@ -33,8 +33,9 @@ namespace Test.Savannah {
         public void Move_CanMove_Can() {
             CreateGame();
             int previousX = gameplay.Animals[0].PositionOnXAxis;
+            int previousY = gameplay.Animals[0].PositionOnYAxis;
             gameplay.Move(boardManager, gameplay.Animals);
-            Assert.AreNotEqual(previousX, gameplay.Animals[0].PositionOnXAxis);
+            Assert.IsFalse(DidNotMove(previousX, previousY));
         }
 
         [Test]
@@ -81,6 +82,10 @@ namespace Test.Savannah {
             };
             animals.Add(lion);
             animals.Add(lion2);
+        }
+
+        private bool DidNotMove(int previousX, int previousY) {
+            return gameplay.Animals[0].PositionOnXAxis == previousX && gameplay.Animals[0].PositionOnYAxis == previousY;
         }
     }
 }

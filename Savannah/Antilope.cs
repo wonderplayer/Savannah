@@ -16,7 +16,7 @@ namespace Savannah {
         private readonly Gameplay gameplay = new Gameplay();
 
         public bool TryToRunAway(List<IAnimal> animals, Board board) {
-            var lionsAround = (List<IAnimal>) SearchForLions(animals);
+            IEnumerable<IAnimal> lionsAround = SearchForLions(animals);
             if (!lionsAround.Any()) {
                 return false;
             }
@@ -24,7 +24,7 @@ namespace Savannah {
             return true;
         }
 
-        private void RunAway(List<IAnimal> animals, List<IAnimal> lionsAround, Board board) {
+        private void RunAway(List<IAnimal> animals, IEnumerable<IAnimal> lionsAround, Board board) {
             for (int y = -1; y <= 1; y++) {
                 for (int x = -1; x <= 1; x++) {
                     if (!gameplay.OutOfBounds(x, y, board, this) && SpaceIsFree(animals, x, y) &&
