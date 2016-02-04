@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace Savannah {
     public class Board {
-        public char[,] BoardLayout;
+        public char[,] Layout;
 
         public void Create() {
-            BoardLayout = new char[10, 10];
-            for (var y = 0; y < BoardLayout.GetLength(0); y++) {
-                for (var x = 0; x < BoardLayout.GetLength(1); x++) {
-                    BoardLayout[y, x] = ' ';
+            Layout = new char[10, 10];
+            for (var y = 0; y < Layout.GetLength(0); y++) {
+                for (var x = 0; x < Layout.GetLength(1); x++) {
+                    Layout[y, x] = ' ';
                 }
             }
         }
@@ -21,9 +21,9 @@ namespace Savannah {
         }
 
         public void Show() {
-            for (var y = 0; y < BoardLayout.GetLength(0); y++) {
-                for (var x = 0; x < BoardLayout.GetLength(1); x++) {
-                    Console.Write(BoardLayout[y, x]);
+            for (var y = 0; y < Layout.GetLength(0); y++) {
+                for (var x = 0; x < Layout.GetLength(1); x++) {
+                    Console.Write(Layout[y, x]);
                 }
                 Console.WriteLine();
             }
@@ -31,19 +31,18 @@ namespace Savannah {
 
         public void Clear(List<IAnimal> animals) {
             foreach (IAnimal animal in animals) {
-                BoardLayout[animal.PositionOnYAxis, animal.PositionOnXAxis] = ' ';
+                Layout[animal.PositionOnYAxis, animal.PositionOnXAxis] = ' ';
             }
         }
 
-        public bool OutOfBounds(int x, int y, char[,] boardLayout, IAnimal animal)
-        {
+        public bool OutOfBounds(int x, int y, char[,] boardLayout, IAnimal animal) {
             return (animal.PositionOnXAxis + x >= boardLayout.GetLength(0)) ||
                    (animal.PositionOnXAxis + x < 0) || (animal.PositionOnYAxis + y >= boardLayout.GetLength(1)) ||
                    (animal.PositionOnYAxis + y < 0);
         }
 
         private void PlaceAnimalOnBoard(IAnimal animal, char animalSignature) {
-            BoardLayout[animal.PositionOnYAxis, animal.PositionOnXAxis] = animalSignature;
+            Layout[animal.PositionOnYAxis, animal.PositionOnXAxis] = animalSignature;
         }
 
         private static bool IsLion(IAnimal animal) {

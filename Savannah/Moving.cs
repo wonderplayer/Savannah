@@ -12,7 +12,8 @@ namespace Savannah {
             foreach (IAnimal animal in animals) {
                 if (IsLion(animal)) {
                     var lion = (Lion) animal;
-                    bool ate = lion.TryToEat(animals);
+                    var lionActions = new LionActions();
+                    bool ate = lionActions.TryToEat(animals, lion);
                     if (ate) {
                         continue;
                     }
@@ -42,7 +43,7 @@ namespace Savannah {
         private void CalculateCorrectPosition(Board board, List<IAnimal> animals, IAnimal animal) {
             adderForXPosition = Program.Random.Next(-1, 2);
             adderForYPosition = Program.Random.Next(-1, 2);
-            while (board.OutOfBounds(adderForXPosition, adderForYPosition, board.BoardLayout, animal) ||
+            while (board.OutOfBounds(adderForXPosition, adderForYPosition, board.Layout, animal) ||
                    PlaceIsNotFree(animal, animals) ||
                    DidntMove()) {
                 adderForXPosition = Program.Random.Next(-1, 2);

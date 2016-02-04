@@ -6,62 +6,95 @@ using Savannah;
 namespace Test.Savannah {
     [TestFixture]
     public class BoardTest {
-        private Board boardManager;
+        private Board board;
 
         [SetUp]
         public void SetUp() {
-            boardManager = new Board();
+            board = new Board();
         }
 
         [Test]
-        public void CreateBoard_CanCreateEmptyBoard_Can() {
-            boardManager.Create();
-            Assert.IsNotEmpty(boardManager.BoardLayout);
+        public void Create_CanCreateEmptyBoard_Can() {
+            board.Create();
+            Assert.IsNotEmpty(board.Layout);
         }
 
         [Test]
-        public void ShowBoard_CanShowNotEmptyBoard_Can() {
-            boardManager.Create();
-            boardManager.Show();
+        public void Show_CanShowNotEmptyBoard_Can() {
+            board.Create();
+            board.Show();
         }
 
         [Test]
-        public void ShowBoard_CanShowEmptyBoard_Exception() {
-            Assert.Throws<NullReferenceException>(() => boardManager.Show());
+        public void Show_CanShowEmptyBoard_Exception() {
+            Assert.Throws<NullReferenceException>(() => board.Show());
         }
 
         [Test]
-        public void FillBoardWithAnimals_CanFillBoad_Can() {
+        public void FillWithAnimals_CanFillBoad_Can() {
             var gameplay = new Gameplay {
                 Animals = new List<IAnimal>()
             };
             AddAnimals(gameplay);
-            boardManager.BoardLayout = new char[10, 10];
+            board.Layout = new char[10, 10];
             var emptyField = new char[10, 10];
-            boardManager.FillWithAnimals(gameplay.Animals);
-            Assert.AreNotEqual(emptyField, boardManager.BoardLayout);
+            board.FillWithAnimals(gameplay.Animals);
+            Assert.AreNotEqual(emptyField, board.Layout);
         }
 
         [Test]
-        public void FillBoardWithAnimals_CannotFillBoardWithNoAnimals_Exception() {
+        public void FillWithAnimals_CannotFillBoardWithNoAnimals_Exception() {
             var gameplay = new Gameplay();
-            boardManager.BoardLayout = new char[5, 5];
-            Assert.Throws<NullReferenceException>(() => boardManager.FillWithAnimals(gameplay.Animals));
+            board.Layout = new char[5, 5];
+            Assert.Throws<NullReferenceException>(() => board.FillWithAnimals(gameplay.Animals));
         }
 
         [Test]
-        public void FillBoardWithAnimals_CannotFillNullBoaardWithAnimals_Exception() {
+        public void FillWithAnimals_CannotFillNullBoaardWithAnimals_Exception() {
             var gameplay = new Gameplay {
                 Animals = new List<IAnimal>()
             };
             AddAnimals(gameplay);
-            Assert.Throws<NullReferenceException>(() => boardManager.FillWithAnimals(gameplay.Animals));
+            Assert.Throws<NullReferenceException>(() => board.FillWithAnimals(gameplay.Animals));
         }
 
+        [Test]
+        public void Clear_ClearsBoardFormAnimals_ClearBoard() {
+            board.Create();
+            var gameplay = new Gameplay {
+                Animals = new List<IAnimal>()
+            };
+            AddAnimals(gameplay);
+            board.FillWithAnimals(gameplay.Animals);
+            object filledBoard = board.Layout.Clone();
+            board.Clear(gameplay.Animals);
+            Assert.AreNotEqual(filledBoard, board.Layout);
+        }
+
+        [Test]
+        public void OutOfBounds_ValueIsNotOutOfBounds_ReturnsFalse() {
+            Gameplay gameplay = InitializeAllNecessaryForOutOfBounds();
+            Assert.IsFalse(board.OutOfBounds(1, 1, board.Layout, gameplay.Animals[0]));
+        }
+
+        [Test]
+        public void OutOfBounds_ValueIsOutOfBounds_ReturnTrue() {
+            Gameplay gameplay = InitializeAllNecessaryForOutOfBounds();
+            Assert.IsTrue(board.OutOfBounds(-1, -1, board.Layout, gameplay.Animals[0]));
+        }
+
+        private Gameplay InitializeAllNecessaryForOutOfBounds() {
+            board.Create();
+            var gameplay = new Gameplay {
+                Animals = new List<IAnimal>()
+            };
+            gameplay.Animals.Add(new Antilope());
+            return gameplay;
+        }
 
         private static void AddAnimals(Gameplay gameplay) {
             gameplay.AddAnimal(new Antilope());
-            gameplay.AddAnimal(new Lion());
+            gameplay.AddAnimal(new Antilope());
         }
     }
 }

@@ -71,10 +71,13 @@ namespace Savannah {
         }
 
         private bool AnimalsInRange(IAnimal currentAnimal, IAnimal animal) {
+            bool himself = animal.PositionOnYAxis == currentAnimal.PositionOnYAxis &&
+                           animal.PositionOnXAxis == currentAnimal.PositionOnXAxis;
             return animal.PositionOnXAxis >= currentAnimal.PositionOnXAxis - 1 &&
                    animal.PositionOnXAxis <= currentAnimal.PositionOnXAxis + 1 &&
                    animal.PositionOnYAxis >= currentAnimal.PositionOnYAxis - 1 &&
-                   animal.PositionOnYAxis <= currentAnimal.PositionOnYAxis + 1;
+                   animal.PositionOnYAxis <= currentAnimal.PositionOnYAxis + 1 &&
+                   !himself;
         }
     }
 }

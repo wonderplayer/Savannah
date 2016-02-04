@@ -43,12 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimalActions.cs" />
     <Compile Include="Antilope.cs" />
+    <Compile Include="AntilopeActions.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Gameplay.cs" />
     <Compile Include="IAnimal.cs" />
     <Compile Include="InGameMenu.cs" />
     <Compile Include="Lion.cs" />
+    <Compile Include="LionActions.cs" />
     <Compile Include="Moving.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

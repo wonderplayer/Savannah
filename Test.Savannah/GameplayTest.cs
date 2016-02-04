@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Savannah;
 
@@ -19,6 +20,13 @@ namespace Test.Savannah {
             AddLionsOnDifferentLocations(gameplay.Animals);
             Assert.AreNotEqual(gameplay.Animals[0].PositionOnXAxis, gameplay.Animals[1].PositionOnXAxis);
             Assert.AreNotEqual(gameplay.Animals[0].PositionOnYAxis, gameplay.Animals[1].PositionOnYAxis);
+        }
+
+        [Test]
+        public void LookAround_FindsAllAnimalsAround_FindsOne() {
+            AddLionsOnDifferentLocations(gameplay.Animals);
+            IEnumerable<IAnimal> foundAnimals = gameplay.LookAround(gameplay.Animals, gameplay.Animals[0]);
+            Assert.AreEqual(1, foundAnimals.Count());
         }
 
         private void AddLionsOnDifferentLocations(List<IAnimal> animals) {

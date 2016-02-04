@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Savannah {
     public class Antilope : IAnimal {
+
         public Antilope() {
             HitPoints = 150;
             Name = "Antilope";
@@ -13,6 +14,7 @@ namespace Savannah {
         public int PositionOnXAxis { get; set; }
         public int PositionOnYAxis { get; set; }
         public string Name { get; set; }
+
         private readonly Gameplay gameplay = new Gameplay();
 
         public bool TryToRunAway(List<IAnimal> animals, Board board) {
@@ -29,7 +31,7 @@ namespace Savannah {
             IEnumerable<IAnimal> enumeratedLionsAround = lionsAround as IList<IAnimal> ?? lionsAround.ToList();
             for (int y = -1; y <= 1; y++) {
                 for (int x = -1; x <= 1; x++) {
-                    if (board.OutOfBounds(x, y, board.BoardLayout, this) || !SpaceIsFree(animals, x, y) ||
+                    if (board.OutOfBounds(x, y, board.Layout, this) || !SpaceIsFree(animals, x, y) ||
                         !IsSafePlaceToGo(enumeratedLionsAround, x, y)) {
                         continue;
                     }

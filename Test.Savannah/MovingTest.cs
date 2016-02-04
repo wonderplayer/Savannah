@@ -6,7 +6,7 @@ namespace Test.Savannah {
     [TestFixture]
     public class MovingTest {
         private Gameplay gameplay;
-        private Board boardManager;
+        private Board board;
         private Moving moving;
 
         [SetUp]
@@ -20,7 +20,7 @@ namespace Test.Savannah {
         [Test]
         public void Move_MovesToFreePlace_Correct() {
             CreateGame();
-            moving.Move(boardManager, gameplay.Animals);
+            moving.Move(board, gameplay.Animals);
             Assert.IsTrue(MovedToFreeSpace());
         }
 
@@ -29,7 +29,7 @@ namespace Test.Savannah {
             CreateGame();
             int previousX = gameplay.Animals[0].PositionOnXAxis;
             int previousY = gameplay.Animals[0].PositionOnYAxis;
-            moving.Move(boardManager, gameplay.Animals);
+            moving.Move(board, gameplay.Animals);
             Assert.IsFalse(DidNotMove(previousX, previousY));
         }
 
@@ -46,10 +46,22 @@ namespace Test.Savannah {
         }
 
         private void CreateGame() {
-            boardManager = new Board();
-            boardManager.Create();
-            gameplay.AddAnimal(new Antilope());
-            gameplay.AddAnimal(new Antilope());
+            board = new Board();
+            board.Create();
+            var newAntilope = new Antilope {
+                HitPoints = 150,
+                Name = "Antilope",
+                PositionOnXAxis = 3,
+                PositionOnYAxis = 3
+            };
+            var newAntilope2 = new Antilope {
+                HitPoints = 150,
+                Name = "Antilope",
+                PositionOnXAxis = 4,
+                PositionOnYAxis = 4
+            };
+            gameplay.Animals.Add(newAntilope);
+            gameplay.Animals.Add(newAntilope2);
         }
     }
 }
