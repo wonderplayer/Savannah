@@ -17,21 +17,24 @@ namespace Savannah {
 
         public bool TryToRunAway(List<IAnimal> animals, Board board) {
             IEnumerable<IAnimal> lionsAround = SearchForLions(animals);
-            if (!lionsAround.Any()) {
+            IEnumerable<IAnimal> enumeratedLionsAround = lionsAround as IList<IAnimal> ?? lionsAround.ToList();
+            if (!enumeratedLionsAround.Any()) {
                 return false;
             }
-            RunAway(animals, lionsAround, board);
+            RunAway(animals, enumeratedLionsAround, board);
             return true;
         }
 
         private void RunAway(List<IAnimal> animals, IEnumerable<IAnimal> lionsAround, Board board) {
+            IEnumerable<IAnimal> enumeratedLionsAround = lionsAround as IList<IAnimal> ?? lionsAround.ToList();
             for (int y = -1; y <= 1; y++) {
                 for (int x = -1; x <= 1; x++) {
-                    if (!board.OutOfBounds(x, y, board.BoardLayout, this) && SpaceIsFree(animals, x, y) &&
-                        IsSafePlaceToGo(lionsAround, x, y)) {
-                        MoveTo(x, y);
-                        return;
+                    if (board.OutOfBounds(x, y, board.BoardLayout, this) || !SpaceIsFree(animals, x, y) ||
+                        !IsSafePlaceToGo(enumeratedLionsAround, x, y)) {
+                        continue;
                     }
+                    MoveTo(x, y);
+                    return;
                 }
             }
         }

@@ -49,6 +49,7 @@
     <Compile Include="IAnimal.cs" />
     <Compile Include="InGameMenu.cs" />
     <Compile Include="Lion.cs" />
+    <Compile Include="Moving.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

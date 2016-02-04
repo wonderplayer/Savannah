@@ -15,19 +15,23 @@ namespace Savannah {
         readonly Gameplay gameplay = new Gameplay();
 
         public bool TryToEat(List<IAnimal> animals) {
-            IAnimal antilopeInRange = SearchForAntilope(animals);
-            if (antilopeInRange == null) {
+            IAnimal antilopeToEat = SearchForAntilope(animals);
+            if (antilopeToEat == null) {
                 return false;
             }
-            Eat(antilopeInRange);
+            Eat(antilopeToEat);
             return true;
         }
 
-        private void Eat(IAnimal antilopeInRange) {
+        private void Eat(IAnimal antilope) {
+            MoveToAntilopesPosition(antilope);
+            HitPoints = 100;
+            antilope.HitPoints = 0;
+        }
+
+        private void MoveToAntilopesPosition(IAnimal antilopeInRange) {
             PositionOnXAxis = antilopeInRange.PositionOnXAxis;
             PositionOnYAxis = antilopeInRange.PositionOnYAxis;
-            HitPoints = 100;
-            antilopeInRange.HitPoints = 0;
         }
 
         private IAnimal SearchForAntilope(List<IAnimal> animals) {
